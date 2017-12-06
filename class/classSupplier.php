@@ -1,17 +1,17 @@
 <?php
-    class supplier{
+    class Supplier{
         
         private $pdo = null;
         private $arraySupplierList = array();
        
-        function __construct($serverString){
-            if(isset($serverString)){
-                $this->pdo = new PDO($serverString);    
+        function __construct($server,$user,$pass){
+            if(isset($server) || isset($user) || isset($pass)){
+                $this->pdo = new PDO($server,$user,$pass);
+                
+                //$this->pdo = new PDO("sqlsrv:server=DESKTOP-TACKN94\SQLEXPRESS2016;Database=petshoptest","stocktake","stocktake");
             }
                 
-        }
-        
-        
+        }        
         /**
          *
          *
@@ -37,10 +37,10 @@
         function getSupplierList(){
             $this->setSupplierList();
             
-            if(isset($arraySupplierList)){
+            if(isset($this->arraySupplierList)){
                 return $this->arraySupplierList;
             }else{
-                return null;
+                return "null";
             }
         }
         

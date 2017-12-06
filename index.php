@@ -35,7 +35,14 @@ error_reporting(E_ALL);
   <body>
 
     <div class="container-fluid" id="mainContainer">
-    
+        <div class="row">
+            <Div class="form-group">
+                <div class="col-xs-10 col-s-10 col-10"><?php include("pages/supplierOptionMenu.php");?></div>
+                <div class="col-xs-2 col-s-2 col-2">
+                    <button class="btn btn-default">Search</button>
+                </div>
+            </Div>
+        </div>
       
       
     </div>

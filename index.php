@@ -36,12 +36,21 @@ error_reporting(E_ALL);
 
     <div class="container-fluid" id="mainContainer">
         <div class="row">
-            <Div class="form-group">
-                <div class="col-xs-10 col-s-10 col-10"><?php include("pages/supplierOptionMenu.php");?></div>
-                <div class="col-xs-2 col-s-2 col-2">
-                    <button class="btn btn-default">Search</button>
+            
+                <div class="col-xs-10 col-s-10 col-10">
+                  <?php include("pages/supplierOptionMenu.php");?>
+                  Lead time <input type="text" id="leadTime"/>
                 </div>
-            </Div>
+                <div class="col-xs-2 col-s-2 col-2">
+                    <button class="btn btn-default" id="showProductsFromSuppliers">Search</button>
+                </div>
+            
+        </div>
+        
+        <div class="row">
+            <div class="col-xs-12 col-s-12 col-12">
+                <div id = "result"></div>
+            </div>
         </div>
       
       
@@ -62,6 +71,27 @@ error_reporting(E_ALL);
     <!-- toogle button -->
     <link href="css/bootstrap-toggle.css" rel="stylesheet">
     <script type='text/javascript' src="js/bootstrap-toggle.js"></script>
+    
+    <script type = "application/javascript">
+       $( "#supplierList" )
+        .change(function () {
+          var supplierList = $("#supplierList option:selected").val();
+          $("#leadTime").val(supplierList);
+        });
+      
+      
+        $( "#showProductsFromSuppliers" )
+          .click(function () {
+            var spinner = "<div class='loading'><div class='spinner'><i class='fa fa-spinner fa-spin fa-5x fa-fw'></i>Loading...</div></div>";
+                    $('#result').html(spinner);
+            var supplierList = $("#supplierList option:selected").text();
+            var leadTime = $("#leadTime").val();
+            $.post( "sql/sqlProductsList.php", { supplier: supplierList, leadTime: leadTime})
+                .done(function( data ) {
+                    $('#result').html(data);
+                });
+          });
+    </script>
   
   </body>
 </html>

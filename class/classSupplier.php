@@ -22,12 +22,12 @@
         function setSupplierList(){
             $arraySuppliers = array();  // empty array to store suppliers
             
-            $query = "SELECT [Supplier] FROM [Suppliers] ORDER BY [Supplier] ASC"; // getting all suppliers from DB
+            $query = "SELECT [Supplier], UserDefinedField1 FROM [Suppliers] ORDER BY [Supplier] ASC"; // getting all suppliers from DB
             $sql = $this->pdo->prepare($query);
             $sql->execute();
                 
             while($row = $sql->fetch()){
-              $arraySuppliers[] = $row['Supplier'];
+              $arraySuppliers[] = array("leadTime" => $row['UserDefinedField1'], "supplier" =>$row['Supplier']);
             }
             
             $this->arraySupplierList = $arraySuppliers;

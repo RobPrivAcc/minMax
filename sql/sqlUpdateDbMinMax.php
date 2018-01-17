@@ -18,8 +18,6 @@ for($i=0; $i <count($newMinMaxArray); $i++){
     $query = $db->prepare($sql);
     $query->execute();
     
-    //$query .= $sql;
-   
 }
 
 echo $queryShow;

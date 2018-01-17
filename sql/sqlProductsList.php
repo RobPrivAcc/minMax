@@ -1,11 +1,14 @@
 <?php
-set_time_limit (120);
+set_time_limit (600);
 include('../class/classProduct.php');
 include('../connection.php');
     $supplier = $_POST['supplier'];
     $leadTime = $_POST['leadTime'];
+    $minOff = $_POST['minOff'];
+    $maxOff = $_POST['maxOff'];
+    
    // $supplier = "Feedwell";
-    echo $supplier.'   lead time: '.$leadTime;
+    //echo $supplier.'   lead time: '.$leadTime;
     
     $product = new Product($server,$user,$password);
     
@@ -19,11 +22,12 @@ include('../connection.php');
     
 	$div .= "<DIV class = 'row'>";
    $updateData = array();
-   
+   $totalLines=0;
     for($i=0; $i<count($productList); $i++){
         $weekAvg = $product->getMonth($productList[$i]['name'],2);
-        $newMin = $product->getMin($weekAvg,$leadTime,20);
-        $newMax = $product->getMax($weekAvg,$leadTime,$productList[$i]['pack'],40);
+        $newMin = $product->getMin($weekAvg,$leadTime,$minOff);
+        $newMax = $product->getMax($weekAvg,$leadTime,$productList[$i]['pack'],$maxOff);
+        if(($newMin!=round($productList[$i]['min'],2)) || ($newMax!=round($productList[$i]['max'],2))){
         $div .= "<DIV class = 'col-xs-12 col-s-12 col-12' style = 'border-bottom: 1px solid black;'>";
             $div .= "<DIV class = 'row'>";
                 $div .= "<DIV class = 'col-xs-12 col-s-12 col-12'><strong>";
@@ -47,9 +51,12 @@ include('../connection.php');
         $div .= "</DIV>";
         
         $updateData[] = array('name' => $productList[$i]['name'],'min' => $newMin, 'max' => $newMax);
+        $totalLines = $i;
+        }
     }
-    $div .= "<input type 'hidden' id = 'newMinMaxArray' value = '".json_encode($updateData)."'/>";
+    //$div .= "<input type='hidden' id = 'newMinMaxArray' value = '".json_encode($updateData)."'/>";
+    $button = "<input type='button' class='btn btn-success' id ='updateBtn' onclick = 'minMaxUpdateValues(".json_encode($updateData).");' value = 'update'/>";
    /*echo $productList[0]['name']."  Pack Size: (".$productList[0]['pack'].") <br/>'";
    print_r($productList);*/
-    echo $div;
+    echo $button."<br/>lines no: ".$totalLines."<br/>".$div;
 ?>

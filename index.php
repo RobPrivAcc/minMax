@@ -11,7 +11,7 @@ error_reporting(E_ALL);
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Pet Republic stock manager</title>
+    <title>Pet Republic Min Max generator71874196</title>
 
    <!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">-->
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
@@ -39,14 +39,34 @@ error_reporting(E_ALL);
             
                 <div class="col-xs-10 col-s-10 col-10">
                   <?php include("pages/supplierOptionMenu.php");?>
-                  Lead time <input type="text" id="leadTime"/>
+                  
+
                 </div>
                 <div class="col-xs-2 col-s-2 col-2">
                     <button class="btn btn-default" id="showProductsFromSuppliers">Search</button>
                 </div>
             
         </div>
-        
+        <div class="row">
+          
+            <div class="form-group col-lg-4">
+                <label for="code">Lead time</label>
+                <input type="text" id="leadTime" class="form-control" />
+            </div>
+            
+            <div class="form-group col-lg-4">
+                <label for="code">min offset</label>
+                <input type="text" id="minOff" value="20" class="form-control" />
+            </div>
+          
+          <div class="form-group col-lg-4">
+                <label for="code">Max offset</label>
+                <input type="text" id="maxOff" value="40" class="form-control" />
+            </div>
+        </div>
+              <!--                 Lead time <input type="text" id="leadTime"/>
+                  min offset <input type="text" id="minOff" value="20"/>
+                  Max offset <input type="text" id="maxOff" value="40"/>-->
         <div class="row">
             <div class="col-xs-12 col-s-12 col-12">
                 <div id = "result"></div>
@@ -85,12 +105,27 @@ error_reporting(E_ALL);
             var spinner = "<div class='loading'><div class='spinner'><i class='fa fa-spinner fa-spin fa-5x fa-fw'></i>Loading...</div></div>";
                     $('#result').html(spinner);
             var supplierList = $("#supplierList option:selected").text();
+            
+           
+            var minOff = $("#minOff").val();
+            var maxOff = $("#maxOff").val();
             var leadTime = $("#leadTime").val();
-            $.post( "sql/sqlProductsList.php", { supplier: supplierList, leadTime: leadTime})
+            $.post( "sql/sqlProductsList.php", { supplier: supplierList, leadTime: leadTime, minOff: minOff, maxOff:maxOff})
                 .done(function( data ) {
                     $('#result').html(data);
+                   
                 });
           });
+    </script>
+    
+    <script type = "application/javascript">      
+        function minMaxUpdateValues(newMinMaxArray) {
+                $.post( "sql/sqlUpdateDbMinMax.php", { newMinMaxArray: newMinMaxArray})
+                .done(function( data ) {
+                  $('#result').html(data);
+                  });
+          };
+          
     </script>
   
   </body>

@@ -28,20 +28,23 @@ switch ($shopNo){
     
     case 3:     //Swords
         $shopName = "Swords";
-        $server = "sqlsrv:Server=SANGOTILL3\SQLEXPRESS;Database=Petshoptest";
+        //$server = "sqlsrv:Server=SANGOTILL3\SQLEXPRESS;Database=Petshoptest";
+        $server = "sqlsrv:Server=95.44.179.19,1317;Database=Petshoptest";
+        
         $user = "sa";
         $password = "SMITH09ALPHA";
         break;
     
     case 4:     //PetCo
         $shopName = "Petco";
-        $server = "sqlsrv:Server=86.47.51.83,1317;Database=petshoptest";
+        $server = "sqlsrv:Server=86.47.51.83,1317;Database=petshoptest";        
+
         $user = "sa";
         $password = "SMITH09ALPHA";
         break;
     
     case 5:     //Charlestown
-        $shopName = "Charlestown2";
+        $shopName = "Charlestown";
         $server = "sqlsrv:Server=PREMEPOS-SANGO2\SQLEXPRESS;Database=PremierEPOS";
         $user = "sa";
         $password = "SMITH09ALPHA";
@@ -63,7 +66,7 @@ switch ($shopNo){
 
     case 30:        //XPS
         $shopName = "Swords";
-        $server = "sqlsrv:server=DESKTOP-TACKN94\SQLEXPRESS2016;Database=petshoptest";
+        $server = "sqlsrv:server=DESKTOP-TACKN94\SQLEXPRESS2016;Database=swords20180109";
         $user = "stocktake";
         $password = "stocktake";
         break;

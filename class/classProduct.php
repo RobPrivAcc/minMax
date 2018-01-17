@@ -10,7 +10,7 @@
                 $this->pdo = new PDO($server,$user,$pass);
             }
                 
-            $this->date = date("Y-m-d",mktime(0, 0, 0, date("m")-2, date("d"), date("Y")));
+            $this->date = date("Y-m-d",mktime(0, 0, 0, date("m"), date("d")-90, date("Y")));
         }
         
         function getDate(){
@@ -27,7 +27,7 @@
                             inner join [Days] on [Orders].[OrderNo] = [Days].[Order Number] 
                              WHERE [Date] > '".$this->getDate()."' AND [NameOfItem] = '$name')  as 'Total'
                         FROM Stock 
-                    WHERE [Name of Item] = '$name';";
+                    WHERE [Name of Item] = '$name' and Discontinued = '0';";
             //echo $query.'<br/>';    
            
             $sql = $this->pdo->prepare($query);
@@ -89,7 +89,7 @@
            // $min = round($this->Sum,0);
 
             if($min == 0 OR $min == 1){
-                $min = 2;
+                $min = 0;
             }
             
             return $min;
@@ -100,7 +100,7 @@
             $max = round(($weekAvg*$leadTime + ($maxProc*$weekAvg)/100),0);
 
             if($max == 0 OR $max == 1){
-                $max = 2;
+                $max = 1;
             }
             
             
